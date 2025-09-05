@@ -1,0 +1,299 @@
+# Copyright (C) 2024 FAQ Chatbot
+# This file is distributed under the same license as the FAQ Chatbot package.
+msgid ""
+msgstr ""
+"Project-Id-Version: FAQ Chatbot 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/faq-chatbot\n"
+"POT-Creation-Date: 2024-01-01 12:00+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: faq-chatbot.php:89
+msgid "Loading..."
+msgstr ""
+
+#: faq-chatbot.php:90
+msgid "An error occurred. Please try again."
+msgstr ""
+
+#: faq-chatbot.php:91
+msgid "Thank you! Your message has been sent successfully."
+msgstr ""
+
+#: faq-chatbot.php:92
+msgid "Please enter your name."
+msgstr ""
+
+#: faq-chatbot.php:93
+msgid "Please enter a valid email address."
+msgstr ""
+
+#: faq-chatbot.php:94
+msgid "Please enter your message."
+msgstr ""
+
+#: faq-chatbot.php:118
+msgid "Please wait before submitting another message."
+msgstr ""
+
+#: faq-chatbot.php:135
+msgid "Please fill in all required fields."
+msgstr ""
+
+#: faq-chatbot.php:139
+msgid "Please enter a valid email address."
+msgstr ""
+
+#: faq-chatbot.php:144
+msgid "New FAQ Chatbot Contact: %s"
+msgstr ""
+
+#: faq-chatbot.php:147
+msgid "New contact form submission from FAQ Chatbot:\n\nName: %s\nEmail: %s\nPhone: %s\nService: %s\nMessage:\n%s\n\nSubmitted from: %s"
+msgstr ""
+
+#: faq-chatbot.php:155
+msgid "Not provided"
+msgstr ""
+
+#: faq-chatbot.php:164
+msgid "Thank you! Your message has been sent successfully."
+msgstr ""
+
+#: faq-chatbot.php:167
+msgid "Failed to send message. Please try again later."
+msgstr ""
+
+#: faq-chatbot.php:182
+msgid "FAQ Chatbot"
+msgstr ""
+
+#: faq-chatbot.php:185
+msgid "How can we help you?"
+msgstr ""
+
+#: faq-chatbot.php:188
+msgid "Loading..."
+msgstr ""
+
+#: faq-chatbot.php:192
+msgid "Go back"
+msgstr ""
+
+#: faq-chatbot.php:193
+msgid "← Back"
+msgstr ""
+
+#: inc/data.php:22
+msgid "Car Maintenance"
+msgstr ""
+
+#: inc/data.php:26
+msgid "What kinds of maintenance do you offer?"
+msgstr ""
+
+#: inc/data.php:27
+msgid "We offer comprehensive car maintenance including oil changes, brake service, filter replacements, belt inspections, fluid checks, and preventive maintenance packages. Our certified technicians use quality parts and follow manufacturer specifications."
+msgstr ""
+
+#: inc/data.php:31
+msgid "What are your maintenance prices?"
+msgstr ""
+
+#: inc/data.php:32
+msgid "Oil change services start from $39 and include a complimentary 21-point inspection. Brake service ranges from $89-$299 depending on your vehicle. We provide free estimates for all maintenance work before starting any service."
+msgstr ""
+
+#: inc/data.php:36
+msgid "Do you offer any special discounts?"
+msgstr ""
+
+#: inc/data.php:37
+msgid "Yes! We offer 10% off for returning customers, 15% off for seniors (65+), and special package deals for multiple services. Military personnel receive a 12% discount with valid ID. Ask about our loyalty program for additional savings."
+msgstr ""
+
+#: inc/data.php:41
+msgid "What warranty do you provide?"
+msgstr ""
+
+#: inc/data.php:42
+msgid "All our maintenance work comes with a 12-month/12,000-mile warranty, whichever comes first. We stand behind our work and use quality parts. If you experience any issues related to our service, we will make it right at no additional cost."
+msgstr ""
+
+#: inc/data.php:46
+msgid "How do I schedule maintenance?"
+msgstr ""
+
+#: inc/data.php:47
+msgid "You can schedule maintenance by calling us, visiting our shop, or using our online booking system. We offer same-day service for most maintenance items and provide convenient appointment times including early morning and evening slots."
+msgstr ""
+
+#: inc/data.php:51
+msgid "Tell me more about your services"
+msgstr ""
+
+#: inc/data.php:52
+msgid "We are a full-service automotive center with over 15 years of experience. Our ASE-certified technicians handle everything from routine maintenance to complex repairs. Visit our services page or contact us for a detailed consultation about your vehicle needs."
+msgstr ""
+
+#: inc/data.php:58
+msgid "Tire Services"
+msgstr ""
+
+#: inc/data.php:62
+msgid "Do you do wheel alignment?"
+msgstr ""
+
+#: inc/data.php:63
+msgid "Yes, we provide professional 4-wheel alignment services starting from $79. Our computerized alignment equipment ensures precise adjustments to manufacturer specifications, improving tire life and vehicle handling."
+msgstr ""
+
+#: inc/data.php:67
+msgid "What tire brands do you carry?"
+msgstr ""
+
+#: inc/data.php:68
+msgid "We carry all major tire brands including Michelin, Goodyear, Bridgestone, Continental, Pirelli, and budget-friendly options. Our tire experts will help you choose the right tires for your vehicle, driving style, and budget."
+msgstr ""
+
+#: inc/data.php:72
+msgid "What is included with tire installation?"
+msgstr ""
+
+#: inc/data.php:73
+msgid "Tire installation includes mounting, balancing, valve stems, disposal of old tires, and a complimentary tire pressure check. We also provide a road hazard warranty and free tire rotations for the life of your tires."
+msgstr ""
+
+#: inc/data.php:77
+msgid "Can you repair flat tires?"
+msgstr ""
+
+#: inc/data.php:78
+msgid "Yes, we offer tire repair services for punctures in the tread area. Repairs start at $25 and include a thorough inspection to ensure the tire is safe to repair. If the tire cannot be safely repaired, we will recommend replacement options."
+msgstr ""
+
+#: inc/data.php:82
+msgid "How often should I rotate my tires?"
+msgstr ""
+
+#: inc/data.php:83
+msgid "We recommend tire rotation every 5,000-7,500 miles or as specified in your vehicle manual. Regular rotation ensures even wear and extends tire life. We offer tire rotation services for $29 or free with oil change packages."
+msgstr ""
+
+#: inc/data.php:87
+msgid "Do you offer seasonal tire storage?"
+msgstr ""
+
+#: inc/data.php:88
+msgid "Yes, we provide seasonal tire storage and changeover services. Store your winter or summer tires in our climate-controlled facility for $99/season. This includes mounting, balancing, and storage until your next seasonal change."
+msgstr ""
+
+#: inc/data.php:94
+msgid "Car Detailing"
+msgstr ""
+
+#: inc/data.php:98
+msgid "What detailing packages do you offer?"
+msgstr ""
+
+#: inc/data.php:99
+msgid "We offer Basic ($49), Premium ($89), and Ultimate ($149) detailing packages. Services include exterior wash, interior cleaning, waxing, tire shine, and more. Each package is designed to meet different needs and budgets."
+msgstr ""
+
+#: inc/data.php:103
+msgid "What does interior detailing include?"
+msgstr ""
+
+#: inc/data.php:104
+msgid "Interior detailing includes vacuuming, steam cleaning of seats and carpets, dashboard and console cleaning, window cleaning, leather conditioning (if applicable), and air freshening. We use professional-grade products safe for all interior materials."
+msgstr ""
+
+#: inc/data.php:108
+msgid "What about exterior detailing?"
+msgstr ""
+
+#: inc/data.php:109
+msgid "Exterior detailing includes hand wash, clay bar treatment, polishing, waxing, tire and rim cleaning, chrome polishing, and paint protection. We use premium products to restore your vehicle's shine and protect the paint finish."
+msgstr ""
+
+#: inc/data.php:113
+msgid "How long does detailing take?"
+msgstr ""
+
+#: inc/data.php:114
+msgid "Basic detailing takes 1-2 hours, Premium takes 2-3 hours, and Ultimate detailing takes 3-4 hours. Time may vary based on vehicle size and condition. We recommend scheduling an appointment to ensure availability."
+msgstr ""
+
+#: inc/data.php:118
+msgid "Do you offer paint protection services?"
+msgstr ""
+
+#: inc/data.php:119
+msgid "Yes, we offer ceramic coating, paint sealants, and protective film services. These treatments provide long-lasting protection against UV rays, environmental contaminants, and minor scratches while maintaining your vehicle's appearance."
+msgstr ""
+
+#: inc/data.php:123
+msgid "How often should I detail my car?"
+msgstr ""
+
+#: inc/data.php:124
+msgid "We recommend professional detailing every 3-4 months for optimal protection and appearance. However, frequency depends on your driving conditions, parking situation, and personal preferences. Regular detailing helps maintain your vehicle's value."
+msgstr ""
+
+#: inc/data.php:130
+msgid "Auto Repairs"
+msgstr ""
+
+#: inc/data.php:134
+msgid "Do you provide diagnostic services?"
+msgstr ""
+
+#: inc/data.php:135
+msgid "Yes, we offer comprehensive diagnostic services using state-of-the-art computer diagnostic equipment. Our diagnostic fee is $99, which is applied toward repair costs if you choose to have the work done with us."
+msgstr ""
+
+#: inc/data.php:139
+msgid "What engine repairs do you handle?"
+msgstr ""
+
+#: inc/data.php:140
+msgid "We handle all engine repairs including timing belts, water pumps, head gaskets, engine rebuilds, and performance issues. Our ASE-certified technicians have experience with all makes and models, from domestic to import vehicles."
+msgstr ""
+
+#: inc/data.php:144
+msgid "Can you repair transmissions?"
+msgstr ""
+
+#: inc/data.php:145
+msgid "Yes, we provide transmission services including fluid changes, filter replacements, and complete transmission rebuilds. We work on both automatic and manual transmissions and offer competitive pricing with quality workmanship."
+msgstr ""
+
+#: inc/data.php:149
+msgid "Do you fix electrical problems?"
+msgstr ""
+
+#: inc/data.php:150
+msgid "Absolutely! We diagnose and repair all electrical issues including alternators, starters, batteries, wiring problems, and computer modules. Our technicians use advanced diagnostic tools to quickly identify and resolve electrical issues."
+msgstr ""
+
+#: inc/data.php:154
+msgid "Do you provide free estimates?"
+msgstr ""
+
+#: inc/data.php:155
+msgid "Yes, we provide free written estimates for all repair work. Our estimates include parts and labor costs with no hidden fees. We will explain the necessary repairs and provide options to fit your budget and timeline."
+msgstr ""
+
+#: inc/data.php:159
+msgid "Do you handle emergency repairs?"
+msgstr ""
+
+#: inc/data.php:160
+msgid "We offer emergency repair services during business hours and can often accommodate urgent repairs the same day. For after-hours emergencies, we can provide referrals to trusted 24-hour towing and emergency services."
+msgstr ""
