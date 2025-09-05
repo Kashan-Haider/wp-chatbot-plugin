@@ -9,19 +9,134 @@
     let messageHistory = [];
     let widget = null;
     let messagesContainer = null;
+    let isSticky = false;
+    let stickyButton = null;
 
     document.addEventListener('DOMContentLoaded', function() {
-        widget = document.getElementById('faq-chatbot-widget');
-        if (!widget || typeof faqChatbot === 'undefined') {
+        // Check if we have the chatbot data
+        if (typeof faqChatbot === 'undefined') {
             return;
         }
 
         chatbotData = faqChatbot.data;
+        
+        // Initialize sticky chatbot
+        initializeStickyChat();
+        
+        // Initialize shortcode chatbot if present
+        initializeShortcodeChat();
+    });
+
+    function initializeStickyChat() {
+        widget = document.getElementById('faq-chatbot-widget');
+        stickyButton = document.getElementById('faq-chatbot-button');
+        
+        if (!widget || !stickyButton) {
+            return;
+        }
+
+        isSticky = true;
         messagesContainer = document.getElementById('chat-messages');
         
+        setupStickyEventListeners();
         initializeChat();
-        setupEventListeners();
-    });
+    }
+
+    function initializeShortcodeChat() {
+        const shortcodeWidget = document.getElementById('faq-chatbot-widget-shortcode');
+        if (!shortcodeWidget) {
+            return;
+        }
+
+        // Hide sticky elements when shortcode is present
+        document.body.classList.add('has-chatbot-shortcode');
+        
+        // Initialize shortcode version
+        widget = shortcodeWidget;
+        messagesContainer = document.getElementById('chat-messages-shortcode');
+        isSticky = false;
+        
+        initializeChat();
+        setupShortcodeEventListeners();
+    }
+
+    function setupStickyEventListeners() {
+        // Toggle chatbot when button is clicked
+        stickyButton.addEventListener('click', function() {
+            toggleChatbot();
+        });
+
+        // Close chatbot when clicking outside (optional)
+        document.addEventListener('click', function(e) {
+            if (widget.style.display === 'block' && 
+                !widget.contains(e.target) && 
+                !stickyButton.contains(e.target)) {
+                // Uncomment the line below if you want to close on outside click
+                // hideChatbot();
+            }
+        });
+
+        // Handle escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && widget.style.display === 'block') {
+                hideChatbot();
+            }
+        });
+
+        // Prevent body scroll when chatbot is open
+        widget.addEventListener('wheel', function(e) {
+            e.stopPropagation();
+        });
+
+        // Setup restart button
+        const restartBtn = document.getElementById('restart-chat');
+        if (restartBtn) {
+            restartBtn.addEventListener('click', restartChat);
+        }
+    }
+
+    function setupShortcodeEventListeners() {
+        const restartBtn = document.getElementById('restart-chat-shortcode');
+        if (restartBtn) {
+            restartBtn.addEventListener('click', restartChat);
+        }
+    }
+
+    function showChatbot() {
+        if (!widget) return;
+        
+        widget.style.display = 'block';
+        stickyButton.style.display = 'none';
+        
+        // Focus management for accessibility
+        const firstFocusable = widget.querySelector('button, input, select, textarea');
+        if (firstFocusable) {
+            firstFocusable.focus();
+        }
+        
+        // Scroll to bottom if there are messages
+        scrollToBottom();
+    }
+
+    function toggleChatbot() {
+        if (!widget) return;
+        
+        if (widget.style.display === 'block') {
+            hideChatbot();
+        } else {
+            showChatbot();
+        }
+    }
+
+    function hideChatbot() {
+        if (!widget) return;
+        
+        widget.style.display = 'none';
+        stickyButton.style.display = 'flex';
+        
+        // Return focus to the button
+        stickyButton.focus();
+    }
 
     function initializeChat() {
         loadChatHistory();
@@ -90,6 +205,9 @@
             
             messagesContainer.appendChild(optionsDiv);
         }
+        
+        // Force scroll to bottom after adding message
+        scrollToBottom();
     }
 
     function showServiceOptions() {
@@ -203,17 +321,51 @@
             return;
         }
         
-        // Simulate form submission
+        if (!isValidEmail(data.email)) {
+            showFormMessage('Please enter a valid email address.', 'error');
+            return;
+        }
+        
         const submitBtn = e.target.querySelector('.faq-chatbot__submit-btn');
         submitBtn.disabled = true;
         submitBtn.textContent = 'Sending...';
         
-        setTimeout(() => {
-            showFormMessage('Thank you! Your message has been sent successfully.', 'success');
+        // Send to REST API
+        fetch(faqChatbot.restUrl + 'contact', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-WP-Nonce': faqChatbot.nonce
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                showFormMessage(result.message || faqChatbot.strings.success, 'success');
+                e.target.reset();
+                
+                // Add success message to chat
+                setTimeout(() => {
+                    addBotMessage("Thank you! Your message has been sent successfully. We'll get back to you soon!");
+                }, 1000);
+            } else {
+                showFormMessage(result.message || faqChatbot.strings.error, 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Contact form error:', error);
+            showFormMessage(faqChatbot.strings.error, 'error');
+        })
+        .finally(() => {
             submitBtn.disabled = false;
             submitBtn.textContent = 'Send Message';
-            e.target.reset();
-        }, 1000);
+        });
+    }
+    
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
     }
 
     function showFormMessage(message, type) {
@@ -265,9 +417,11 @@
     }
 
     function scrollToBottom() {
-        setTimeout(() => {
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }, 100);
+        if (messagesContainer) {
+            setTimeout(() => {
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 200);
+        }
     }
 
 })();

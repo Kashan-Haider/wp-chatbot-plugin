@@ -26,11 +26,11 @@ define('FAQ_CHATBOT_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('FAQ_CHATBOT_RECIPIENT_EMAIL', 'herman@homecareassistanceofjefferson.com');
 
 // SMTP Configuration for Hostinger
-define('FAQ_CHATBOT_SMTP_HOST', 'mail.hostinger.com');
+define('FAQ_CHATBOT_SMTP_HOST', 'smtp.hostinger.com');
 define('FAQ_CHATBOT_SMTP_PORT', 465);
 define('FAQ_CHATBOT_SMTP_SECURE', 'ssl');
-define('FAQ_CHATBOT_SMTP_USERNAME', 'herman@homecareassistanceofjefferson.com');
-define('FAQ_CHATBOT_SMTP_PASSWORD', 'Herman@Home1');
+define('FAQ_CHATBOT_SMTP_USERNAME', 'noreply@homecareassistanceofjefferson.com');
+define('FAQ_CHATBOT_SMTP_PASSWORD', 'r|Xv7Q0QV7');
 
 /**
  * Main FAQ Chatbot Class
@@ -43,6 +43,7 @@ class FAQ_Chatbot {
     public function __construct() {
         add_action('init', array($this, 'init'));
         add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
+        add_action('wp_footer', array($this, 'render_sticky_chatbot'));
         add_action('rest_api_init', array($this, 'register_rest_routes'));
         register_activation_hook(__FILE__, array($this, 'activate'));
         register_deactivation_hook(__FILE__, array($this, 'deactivate'));
@@ -165,39 +166,40 @@ class FAQ_Chatbot {
      * Enqueue scripts and styles
      */
     public function enqueue_scripts() {
-        // Only enqueue on pages that contain the shortcode
-        global $post;
-        if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'wp_chatbot')) {
-            wp_enqueue_style(
-                'faq-chatbot-styles',
-                FAQ_CHATBOT_PLUGIN_URL . 'assets/css/styles.css',
-                array(),
-                FAQ_CHATBOT_VERSION
-            );
-            
-            wp_enqueue_script(
-                'faq-chatbot-script',
-                FAQ_CHATBOT_PLUGIN_URL . 'assets/js/chatbot.js',
-                array(),
-                FAQ_CHATBOT_VERSION,
-                true
-            );
-            
-            // Localize script with REST API data
-            wp_localize_script('faq-chatbot-script', 'faqChatbot', array(
-                'restUrl' => rest_url('faq-chatbot/v1/'),
-                'nonce' => wp_create_nonce('wp_rest'),
-                'data' => $this->get_chatbot_data(),
-                'strings' => array(
-                    'loading' => __('Loading...', 'faq-chatbot'),
-                    'error' => __('An error occurred. Please try again.', 'faq-chatbot'),
-                    'success' => __('Thank you! Your message has been sent successfully.', 'faq-chatbot'),
-                    'validation_name' => __('Please enter your name.', 'faq-chatbot'),
-                    'validation_email' => __('Please enter a valid email address.', 'faq-chatbot'),
-                    'validation_message' => __('Please enter your message.', 'faq-chatbot'),
-                )
-            ));
+        // Skip admin pages and login pages
+        if (is_admin() || is_login()) {
+            return;
         }
+        
+        wp_enqueue_style(
+            'faq-chatbot-styles',
+            FAQ_CHATBOT_PLUGIN_URL . 'assets/css/styles.css',
+            array(),
+            FAQ_CHATBOT_VERSION
+        );
+        
+        wp_enqueue_script(
+            'faq-chatbot-script',
+            FAQ_CHATBOT_PLUGIN_URL . 'assets/js/chatbot.js',
+            array(),
+            FAQ_CHATBOT_VERSION,
+            true
+        );
+        
+        // Localize script with REST API data
+        wp_localize_script('faq-chatbot-script', 'faqChatbot', array(
+            'restUrl' => rest_url('faq-chatbot/v1/'),
+            'nonce' => wp_create_nonce('wp_rest'),
+            'data' => $this->get_chatbot_data(),
+            'strings' => array(
+                'loading' => __('Loading...', 'faq-chatbot'),
+                'error' => __('An error occurred. Please try again.', 'faq-chatbot'),
+                'success' => __('Thank you! Your message has been sent successfully.', 'faq-chatbot'),
+                'validation_name' => __('Please enter your name.', 'faq-chatbot'),
+                'validation_email' => __('Please enter a valid email address.', 'faq-chatbot'),
+                'validation_message' => __('Please enter your message.', 'faq-chatbot'),
+            )
+        ));
     }
     
     /**
@@ -371,14 +373,22 @@ class FAQ_Chatbot {
     }
     
     /**
-     * Render chatbot shortcode
+     * Render sticky chatbot widget in footer
      */
-    public function render_chatbot_shortcode($atts) {
-        $atts = shortcode_atts(array(), $atts, 'wp_chatbot');
-        
-        ob_start();
+    public function render_sticky_chatbot() {
+        // Skip admin pages and login pages
+        if (is_admin() || is_login()) {
+            return;
+        }
         ?>
-        <div class="faq-chatbot" id="faq-chatbot-widget" role="region" aria-label="<?php esc_attr_e('FAQ Chatbot', 'faq-chatbot'); ?>">
+        <!-- Sticky Chatbot Button -->
+        <div id="faq-chatbot-button" class="faq-chatbot-button" aria-label="<?php esc_attr_e('Open Chat Support', 'faq-chatbot'); ?>">
+            <span class="faq-chatbot-button__icon">💬</span>
+            <span class="faq-chatbot-button__text"><?php _e('Chat', 'faq-chatbot'); ?></span>
+        </div>
+        
+        <!-- Sticky Chatbot Widget -->
+        <div class="faq-chatbot faq-chatbot--sticky" id="faq-chatbot-widget" role="region" aria-label="<?php esc_attr_e('FAQ Chatbot', 'faq-chatbot'); ?>" style="display: none;">
             <div class="faq-chatbot__header">
                 <h3><?php _e('How can we help you?', 'faq-chatbot'); ?></h3>
             </div>
@@ -388,6 +398,30 @@ class FAQ_Chatbot {
             <div class="faq-chatbot__input-area">
                 <div class="faq-chatbot__quick-actions">
                     <button type="button" class="faq-chatbot__restart-btn" id="restart-chat"><?php _e('🔄 Start Over', 'faq-chatbot'); ?></button>
+                </div>
+            </div>
+        </div>
+        <?php
+    }
+    
+    /**
+     * Render chatbot shortcode
+     */
+    public function render_chatbot_shortcode($atts) {
+        $atts = shortcode_atts(array(), $atts, 'wp_chatbot');
+        
+        ob_start();
+        ?>
+        <div class="faq-chatbot" id="faq-chatbot-widget-shortcode" role="region" aria-label="<?php esc_attr_e('FAQ Chatbot', 'faq-chatbot'); ?>">
+            <div class="faq-chatbot__header">
+                <h3><?php _e('How can we help you?', 'faq-chatbot'); ?></h3>
+            </div>
+            <div class="faq-chatbot__content" aria-live="polite" id="chat-messages-shortcode">
+                <!-- Messages will be added here -->
+            </div>
+            <div class="faq-chatbot__input-area">
+                <div class="faq-chatbot__quick-actions">
+                    <button type="button" class="faq-chatbot__restart-btn" id="restart-chat-shortcode"><?php _e('🔄 Start Over', 'faq-chatbot'); ?></button>
                 </div>
             </div>
         </div>

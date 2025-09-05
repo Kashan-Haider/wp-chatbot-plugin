@@ -47,11 +47,13 @@
 .faq-chatbot__content {
     flex: 1;
     padding: 16px;
-    overflow-y: auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
     background: #f8f9fa;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+    position: relative;
+    min-height: 0;
+    height: 350px;
+    -webkit-overflow-scrolling: touch;
 }
 
 /* Chat message bubbles */
@@ -118,12 +120,27 @@
     animation: typingDot 1.4s infinite ease-in-out;
 }
 
-.faq-chatbot__typing-dot:nth-child(1) { animation-delay: -0.32s; }
-.faq-chatbot__typing-dot:nth-child(2) { animation-delay: -0.16s; }
+.faq-chatbot__typing-dot:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.faq-chatbot__typing-dot:nth-child(2) {
+    animation-delay: -0.16s;
+}
 
 @keyframes typingDot {
-    0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
-    40% { transform: scale(1); opacity: 1; }
+
+    0%,
+    80%,
+    100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 @keyframes fadeInUp {
@@ -131,6 +148,7 @@
         opacity: 0;
         transform: translateY(10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -388,24 +406,24 @@
         height: 100vh;
         max-width: none;
     }
-    
+
     .faq-chatbot__header {
         border-radius: 0;
     }
-    
+
     .faq-chatbot__content {
         padding: 12px;
     }
-    
+
     .faq-chatbot__input-area {
         padding: 12px;
         border-radius: 0;
     }
-    
+
     .faq-chatbot__action-buttons {
         flex-direction: column;
     }
-    
+
     .faq-chatbot__action-btn {
         flex: none;
         min-width: auto;
@@ -414,6 +432,7 @@
 
 /* Accessibility improvements */
 @media (prefers-reduced-motion: reduce) {
+
     .faq-chatbot *,
     .faq-chatbot *::before,
     .faq-chatbot *::after {
@@ -428,7 +447,7 @@
     .faq-chatbot {
         border-width: 2px;
     }
-    
+
     .faq-chatbot__service-btn,
     .faq-chatbot__question-btn,
     .faq-chatbot__action-btn,
@@ -445,4 +464,138 @@
 .faq-chatbot textarea:focus-visible {
     outline: 2px solid #007cba;
     outline-offset: 2px;
+}
+
+/* Sticky Chatbot Button */
+.faq-chatbot-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: all 0.3s ease;
+    border: none;
+    overflow: hidden;
+}
+
+.faq-chatbot-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 25px rgba(102, 126, 234, 0.6);
+}
+
+.faq-chatbot-button__icon {
+    font-size: 24px;
+    transition: all 0.3s ease;
+}
+
+.faq-chatbot-button__text {
+    position: absolute;
+    right: 70px;
+    background: #333;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(10px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.faq-chatbot-button:hover .faq-chatbot-button__text {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.faq-chatbot-button:hover .faq-chatbot-button__icon {
+    transform: rotate(10deg);
+}
+
+/* Sticky Chatbot Widget */
+.faq-chatbot--sticky {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 380px;
+    height: 500px;
+    z-index: 9998;
+    margin: 0;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    animation: slideInUp 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 120px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Remove close button styles - no longer needed */
+
+/* Responsive adjustments for sticky widget */
+@media (max-width: 600px) {
+    .faq-chatbot--sticky {
+        bottom: 0;
+        right: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        border-radius: 0;
+        animation: slideInUp 0.3s ease;
+        max-height: 100vh;
+    }
+
+    .faq-chatbot__content {
+        max-height: calc(100vh - 140px);
+        min-height: 0;
+    }
+
+    .faq-chatbot-button {
+        bottom: 15px;
+        right: 15px;
+        width: 55px;
+        height: 55px;
+    }
+
+    .faq-chatbot-button__icon {
+        font-size: 22px;
+    }
+
+    .faq-chatbot-button__text {
+        display: none;
+    }
+}
+
+@media (max-width: 420px) {
+    .faq-chatbot--sticky {
+        width: 100vw;
+        right: 0;
+    }
+}
+
+/* Hide sticky elements when shortcode is present */
+body.has-chatbot-shortcode .faq-chatbot-button,
+body.has-chatbot-shortcode .faq-chatbot--sticky {
+    display: none !important;
 }
