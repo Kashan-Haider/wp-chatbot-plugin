@@ -391,6 +391,9 @@ class FAQ_Chatbot {
         <div class="faq-chatbot faq-chatbot--sticky" id="faq-chatbot-widget" role="region" aria-label="<?php esc_attr_e('FAQ Chatbot', 'faq-chatbot'); ?>" style="display: none;">
             <div class="faq-chatbot__header">
                 <h3><?php _e('How can we help you?', 'faq-chatbot'); ?></h3>
+                <button type="button" class="faq-chatbot__close-btn" id="faq-chatbot-close" aria-label="<?php esc_attr_e('Close Chat', 'faq-chatbot'); ?>">
+                    ✕
+                </button>
             </div>
             <div class="faq-chatbot__content" aria-live="polite" id="chat-messages">
                 <!-- Messages will be added here -->

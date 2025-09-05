@@ -66,6 +66,16 @@
             toggleChatbot();
         });
 
+        // Close chatbot when close button is clicked
+        const closeBtn = document.getElementById('faq-chatbot-close');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                hideChatbot();
+            });
+        }
+
         // Close chatbot when clicking outside (optional)
         document.addEventListener('click', function(e) {
             if (widget.style.display === 'block' && 
